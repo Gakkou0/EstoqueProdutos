@@ -63,10 +63,6 @@ public abstract class Produto {
     public LocalDate getDataCadastro() {
         return dataCadastro;
     }
-
-    public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
     
     public boolean verificaEstoque(){
         return getQuantidadeProduto()>0;

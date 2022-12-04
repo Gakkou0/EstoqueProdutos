@@ -6,8 +6,10 @@ public class ProdutoVencimento extends Produto{
     
     private LocalDate dataValidade;
     
-    public ProdutoVencimento(String nome, double preco, int quantidadeProduto, int codigoSistema, int codigoBarra, LocalDate dataCadastro) {
+    public ProdutoVencimento(String nome, double preco, int quantidadeProduto, int codigoSistema, int codigoBarra, LocalDate dataCadastro, LocalDate dataValidade) {
         super(nome, preco, quantidadeProduto, codigoSistema, codigoBarra, dataCadastro);
+        this.dataValidade = dataValidade;
+        
     }
 
     public LocalDate getDataValidade() {
@@ -20,5 +22,10 @@ public class ProdutoVencimento extends Produto{
     
     public boolean verificaValidade(){
         return this.dataValidade.isBefore(LocalDate.now());
+    }
+    
+    @Override
+    public String toString() {
+        return super.toString() + "\n Data de validade: " + getDataValidade();
     }
 }

@@ -6,8 +6,9 @@ public class ProdutoEletronico extends Produto {
 
     private int anoLancamento;
     
-    public ProdutoEletronico(String nome, double preco, int quantidadeProduto, int codigoSistema, int codigoBarra, LocalDate dataCadastro, int ano) {
+    public ProdutoEletronico(String nome, double preco, int quantidadeProduto, int codigoSistema, int codigoBarra, LocalDate dataCadastro, int anoLancamento) {
         super(nome, preco, quantidadeProduto, codigoSistema, codigoBarra, dataCadastro);
+        this.anoLancamento = anoLancamento;
     }
 
     public int getAnoLancamento() {
@@ -22,6 +23,5 @@ public class ProdutoEletronico extends Produto {
     public String toString() {
         return super.toString() + "\n Ano de lançamento: " + getAnoLancamento();
     }
-    
-    
+
 }

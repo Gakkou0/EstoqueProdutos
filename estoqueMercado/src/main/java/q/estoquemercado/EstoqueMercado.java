@@ -1,5 +1,6 @@
 package q.estoquemercado;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 
@@ -50,7 +51,17 @@ public class EstoqueMercado {
                     opcao = scan.nextInt();
                     switch(opcao){
                         case 1 -> {
+                            System.out.println("Adição de produto\n");
+                            System.out.println("Digite o nome do produto:");
+                            String nome = scan.nextLine();
+                            System.out.println("Digite o preço do produto:");
+                            double preco = scan.nextDouble();
+                            System.out.println("Digite o codigo de Barras:");
+                            int codigoBarra = scan.nextInt();
+                            System.out.println("Digite o codigo no sistema:");
+                            int codigoSistema = scan.nextInt();
                             
+                            //estoque.adicionarNovoProdutoProdutoEletronico produto = new ProdutoEletronico(nome, preco,343, codigoBarra, codigoSistema, LocalDate.now(), 1903);
                         }
                         case 2 -> {
                             
