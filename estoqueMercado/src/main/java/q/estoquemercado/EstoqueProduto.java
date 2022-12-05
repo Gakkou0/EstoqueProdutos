@@ -112,7 +112,7 @@ public class EstoqueProduto implements Estoque{
     
     @Override
     public void pesquisaCodigoBarra(int codigo){
-        for(int i = 0; i < this.estoque.size();i++){
+        for(int i = 0; i <= this.estoque.size();i++){
             if(codigo == this.estoque.get(i).getCodigoBarra()){
                 System.out.println(this.estoque.get(i));
                 break;

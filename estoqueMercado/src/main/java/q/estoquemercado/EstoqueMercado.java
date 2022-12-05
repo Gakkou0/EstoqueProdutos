@@ -4,20 +4,19 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class EstoqueMercado {
 
     public static void main(String[] args) {
         boolean running = true;
-        
+
         EstoqueProduto estoque = new EstoqueProduto();
-        
+
         Scanner scan = new Scanner(System.in);
         int opcao;
-        
-        while(running){
+
+        while (running) {
             System.out.println("Menu");
-            
+
             System.out.println("""
                                1 - Busca de item por nome ou codigo
                                2 - Busca de item por código de barras
@@ -28,16 +27,20 @@ public class EstoqueMercado {
                                
                                """);
             opcao = scan.nextInt();
-            
-            switch(opcao){
+
+            switch (opcao) {
                 case 1 -> {
-                    
+                    System.out.println("Digite o nome:");
+                    String nome = scan.next();
+                    estoque.pesquisarProduto(nome);
                 }
                 case 2 -> {
-                    
+                    System.out.println("Digite o codigo de barras:");
+                    int codigo = scan.nextInt();
+                    estoque.pesquisaCodigoBarra(codigo);
                 }
                 case 3 -> {
-                    System.out.println("Valor total em estoque é: " +estoque.valorTotal());
+                    System.out.println("Valor total em estoque é: " + estoque.valorTotal());
                 }
                 case 4 -> {
                     System.out.println("Menu de manipulação");
@@ -46,71 +49,205 @@ public class EstoqueMercado {
                                        2 - Deletar produtos
                                        3 - Editar produtos
                                        4 - Atualizar quantidade em estoque
-                                       5 - Ler produtos
-                                       6 - Voltar
+                                       5 - Voltar
                                        """);
                     opcao = scan.nextInt();
-                    switch(opcao){
+                    switch (opcao) {
                         case 1 -> {
-                            boolean flag = true;
-                            
-                            while(flag){
-                                try{
-                                    Scanner input = new Scanner(System.in);
-                                    
-                                    System.out.println("Adição de produto\n");
-                                    System.out.println("Digite o nome do produto:");
-                                    String nome = input.next();
-                                    System.out.println("Digite o preço do produto:");
-                                    double preco = input.nextDouble();
-                                    System.out.println("Digite a quantidade em estoque:");
-                                    int quantidade = input.nextInt();
-                                    System.out.println("Digite o codigo de Barras:");
-                                    int codigoBarra = input.nextInt();
-                                    System.out.println("Digite o codigo no sistema:");
-                                    int codigoSistema = input.nextInt();
+                            System.out.println("""
+                                               1 - produto eletronico
+                                               2 - produto com prazo de validade
+                                               """);
+                            opcao = scan.nextInt();
 
-                                    ProdutoEletronico produto = new ProdutoEletronico(nome, preco, quantidade, codigoBarra, codigoSistema, LocalDate.now(), 1903);
-                                    estoque.adicionarNovoProduto(produto);
-                                    flag = false;
-                                }catch(InputMismatchException e){
-                                    System.out.println("Tipo impartivel de dados");
-                                    System.out.println("Por favor, tente novamente");
+                            switch (opcao) {
+                                case 1 -> {
+                                    boolean flag = true;
+
+                                    while (flag) {
+                                        try {
+                                            Scanner input = new Scanner(System.in);
+
+                                            System.out.println("Adição de produto\n");
+                                            System.out.println("Digite o nome do produto:");
+                                            String nome = input.next();
+                                            System.out.println("Digite o preço do produto:");
+                                            double preco = input.nextDouble();
+                                            System.out.println("Digite a quantidade em estoque:");
+                                            int quantidade = input.nextInt();
+                                            System.out.println("Digite o codigo de Barras:");
+                                            int codigoBarra = input.nextInt();
+                                            System.out.println("Digite o codigo no sistema:");
+                                            int codigoSistema = input.nextInt();
+                                            System.out.println("Digite o ano de lançamento:");
+                                            int anoLancamento = input.nextInt();
+
+                                            ProdutoEletronico produto = new ProdutoEletronico(nome, preco, quantidade, codigoBarra, codigoSistema, LocalDate.now(), anoLancamento);
+                                            estoque.adicionarNovoProduto(produto);
+                                            flag = false;
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Tipo impartivel de dados");
+                                            System.out.println("Por favor, tente novamente");
+                                        }
+                                    }
+                                }
+                                case 2 -> {
+                                    boolean flag = true;
+
+                                    while (flag) {
+                                        try {
+                                            Scanner input = new Scanner(System.in);
+
+                                            System.out.println("Adição de produto\n");
+                                            System.out.println("Digite o nome do produto:");
+                                            String nome = input.next();
+                                            System.out.println("Digite o preço do produto:");
+                                            double preco = input.nextDouble();
+                                            System.out.println("Digite a quantidade em estoque:");
+                                            int quantidade = input.nextInt();
+                                            System.out.println("Digite o codigo de Barras:");
+                                            int codigoBarra = input.nextInt();
+                                            System.out.println("Digite o codigo no sistema:");
+                                            int codigoSistema = input.nextInt();
+                                            System.out.println("Digite o dia de vencimento:");
+                                            int dia = input.nextInt();
+                                            System.out.println("Digite o mês de vencimento:");
+                                            int mes = input.nextInt();
+                                            System.out.println("Digite o ano de vencimento:");
+                                            int ano = input.nextInt();
+
+                                            ProdutoVencimento produto = new ProdutoVencimento(nome, preco, quantidade, codigoBarra, codigoSistema, LocalDate.now(), LocalDate.of(ano, mes, dia));
+                                            estoque.adicionarNovoProduto(produto);
+                                            flag = false;
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Tipo impartivel de dados");
+                                            System.out.println("Por favor, tente novamente");
+                                        }
+                                    }
+                                }
+                                default -> {
+                                    System.out.println("Opção invalida");
                                 }
                             }
-                            
+
                         }
                         case 2 -> {
-                            
+                            System.out.println("Digite o endereço do produto");
+                            int index = scan.nextInt();
+
+                            estoque.deletarProduto(index);
+
+                            System.out.println("item deletado");
                         }
                         case 3 -> {
-                            
+                            System.out.println("Digite o endereço do produto");
+                            int index = scan.nextInt();
+
+                            System.out.println("""
+                                               1 - produto eletronico
+                                               2 - produto com prazo de validade
+                                               """);
+                            opcao = scan.nextInt();
+
+                            switch (opcao) {
+                                case 1 -> {
+                                    boolean flag = true;
+
+                                    while (flag) {
+                                        try {
+                                            Scanner input = new Scanner(System.in);
+
+                                            System.out.println("Adição de produto\n");
+                                            System.out.println("Digite o nome do produto:");
+                                            String nome = input.next();
+                                            System.out.println("Digite o preço do produto:");
+                                            double preco = input.nextDouble();
+                                            System.out.println("Digite a quantidade em estoque:");
+                                            int quantidade = input.nextInt();
+                                            System.out.println("Digite o codigo de Barras:");
+                                            int codigoBarra = input.nextInt();
+                                            System.out.println("Digite o codigo no sistema:");
+                                            int codigoSistema = input.nextInt();
+                                            System.out.println("Digite o ano de lançamento:");
+                                            int anoLancamento = input.nextInt();
+
+                                            ProdutoEletronico produto = new ProdutoEletronico(nome, preco, quantidade, codigoBarra, codigoSistema, LocalDate.now(), anoLancamento);
+                                            estoque.editarProduto(index, produto);
+                                            flag = false;
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Tipo impartivel de dados");
+                                            System.out.println("Por favor, tente novamente");
+                                        }
+                                    }
+                                }
+                                case 2 -> {
+                                    boolean flag = true;
+
+                                    while (flag) {
+                                        try {
+                                            Scanner input = new Scanner(System.in);
+
+                                            System.out.println("Adição de produto\n");
+                                            System.out.println("Digite o nome do produto:");
+                                            String nome = input.next();
+                                            System.out.println("Digite o preço do produto:");
+                                            double preco = input.nextDouble();
+                                            System.out.println("Digite a quantidade em estoque:");
+                                            int quantidade = input.nextInt();
+                                            System.out.println("Digite o codigo de Barras:");
+                                            int codigoBarra = input.nextInt();
+                                            System.out.println("Digite o codigo no sistema:");
+                                            int codigoSistema = input.nextInt();
+                                            System.out.println("Digite o dia de vencimento:");
+                                            int dia = input.nextInt();
+                                            System.out.println("Digite o mês de vencimento:");
+                                            int mes = input.nextInt();
+                                            System.out.println("Digite o ano de vencimento:");
+                                            int ano = input.nextInt();
+
+                                            ProdutoVencimento produto = new ProdutoVencimento(nome, preco, quantidade, codigoBarra, codigoSistema, LocalDate.now(), LocalDate.of(ano, mes, dia));
+                                            estoque.editarProduto(index, produto);
+                                            flag = false;
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Tipo impartivel de dados");
+                                            System.out.println("Por favor, tente novamente");
+                                        }
+                                    }
+                                }
+                                default -> {
+                                    System.out.println("Opção invalida");
+                                }
+
+                            }
                         }
                         case 4 -> {
-                            
+                            System.out.println("Digite o endereço do produto");
+                            int index = scan.nextInt();
+                            System.out.println("Digite a quantidade a ser adicionada:");
+                            int quantidade = scan.nextInt();
+
+                            estoque.adicionarItens(index, quantidade);
+
+                            System.out.println("itens adicionados");
                         }
                         case 5 -> {
-                            
                         }
-                        case 6 -> {
-                            
-                        }
-                        
+
                         default -> {
                             System.out.println("Opção não encontrada");
                         }
                     }
                 }
                 case 5 -> {
-                     System.out.println("""
+                    System.out.println("""
                                        1 - Exibir versão completa
                                        2 - Exibir versão resumida
                                        """);
-                    estoque.lerTodosProdutos(scan.nextInt());  
+                    estoque.lerTodosProdutos(scan.nextInt());
                 }
                 case 6 -> {
-                     System.out.println("Produto com valor mais alto:\n");
-                     estoque.valorMaisAlto();
+                    System.out.println("Produto com valor mais alto:\n");
+                    estoque.valorMaisAlto();
                 }
                 default -> {
                     System.out.println("Opção não encontrada");
