@@ -26,6 +26,6 @@ public class ProdutoVencimento extends Produto{
     
     @Override
     public String toString() {
-        return super.toString() + "\n Data de validade: " + getDataValidade();
+        return super.toString() + "\nData de validade: " + getDataValidade();
     }
 }

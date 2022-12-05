@@ -21,7 +21,7 @@ public class ProdutoEletronico extends Produto {
 
     @Override
     public String toString() {
-        return super.toString() + "\n Ano de lançamento: " + getAnoLancamento();
+        return super.toString() + "\nAno de lançamento: " + getAnoLancamento();
     }
 
 }

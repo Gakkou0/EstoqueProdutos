@@ -1,6 +1,7 @@
 package q.estoquemercado;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -36,7 +37,7 @@ public class EstoqueMercado {
                     
                 }
                 case 3 -> {
-                    
+                    System.out.println("Valor total em estoque é: " +estoque.valorTotal());
                 }
                 case 4 -> {
                     System.out.println("Menu de manipulação");
@@ -51,17 +52,33 @@ public class EstoqueMercado {
                     opcao = scan.nextInt();
                     switch(opcao){
                         case 1 -> {
-                            System.out.println("Adição de produto\n");
-                            System.out.println("Digite o nome do produto:");
-                            String nome = scan.nextLine();
-                            System.out.println("Digite o preço do produto:");
-                            double preco = scan.nextDouble();
-                            System.out.println("Digite o codigo de Barras:");
-                            int codigoBarra = scan.nextInt();
-                            System.out.println("Digite o codigo no sistema:");
-                            int codigoSistema = scan.nextInt();
+                            boolean flag = true;
                             
-                            //estoque.adicionarNovoProdutoProdutoEletronico produto = new ProdutoEletronico(nome, preco,343, codigoBarra, codigoSistema, LocalDate.now(), 1903);
+                            while(flag){
+                                try{
+                                    Scanner input = new Scanner(System.in);
+                                    
+                                    System.out.println("Adição de produto\n");
+                                    System.out.println("Digite o nome do produto:");
+                                    String nome = input.next();
+                                    System.out.println("Digite o preço do produto:");
+                                    double preco = input.nextDouble();
+                                    System.out.println("Digite a quantidade em estoque:");
+                                    int quantidade = input.nextInt();
+                                    System.out.println("Digite o codigo de Barras:");
+                                    int codigoBarra = input.nextInt();
+                                    System.out.println("Digite o codigo no sistema:");
+                                    int codigoSistema = input.nextInt();
+
+                                    ProdutoEletronico produto = new ProdutoEletronico(nome, preco, quantidade, codigoBarra, codigoSistema, LocalDate.now(), 1903);
+                                    estoque.adicionarNovoProduto(produto);
+                                    flag = false;
+                                }catch(InputMismatchException e){
+                                    System.out.println("Tipo impartivel de dados");
+                                    System.out.println("Por favor, tente novamente");
+                                }
+                            }
+                            
                         }
                         case 2 -> {
                             
@@ -86,13 +103,14 @@ public class EstoqueMercado {
                 }
                 case 5 -> {
                      System.out.println("""
-                                       1 - Exibir versão resumida
-                                       2 - Exibir versão completa
+                                       1 - Exibir versão completa
+                                       2 - Exibir versão resumida
                                        """);
                     estoque.lerTodosProdutos(scan.nextInt());  
                 }
                 case 6 -> {
-                                   
+                     System.out.println("Produto com valor mais alto:\n");
+                     estoque.valorMaisAlto();
                 }
                 default -> {
                     System.out.println("Opção não encontrada");

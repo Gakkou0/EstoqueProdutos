@@ -39,8 +39,8 @@ public class EstoqueProduto implements Estoque{
             }
             case 2 -> {
                 for(int i = 0; i < this.estoque.size();i++){
-                    System.out.println("Produto \n\n Nome: " + this.estoque.get(i).getNome() +
-                            "\nPreço: " + this.estoque.get(i).getNome() +
+                    System.out.println("Produto \n\nNome: " + this.estoque.get(i).getNome() +
+                            "\nPreço: " + this.estoque.get(i).getPreco() +
                             "\nCodigo de Barra: " + this.estoque.get(i).getCodigoBarra());
                 }
             }
@@ -54,6 +54,7 @@ public class EstoqueProduto implements Estoque{
         this.estoque.add(index, produto);
     }
     
+    @Override
     public void adicionarItens(int index, int quantidade){
         
         int novaQuantidade = (this.estoque.get(index).getQuantidadeProduto() + quantidade);

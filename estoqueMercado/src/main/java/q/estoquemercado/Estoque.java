@@ -3,6 +3,7 @@ package q.estoquemercado;
 public interface Estoque {
     
     public void adicionarNovoProduto(Produto novoProduto);
+    public void adicionarItens(int index, int quantidade);
     public void deletarProduto(int index);
     public void lerTodosProdutos(int opcao);
     public void editarProduto(int index, Produto produto);

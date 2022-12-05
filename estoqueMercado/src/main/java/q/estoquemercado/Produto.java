@@ -9,7 +9,7 @@ public abstract class Produto {
     private int quantidadeProduto;
     private int codigoSistema;
     private int codigoBarra;
-    private LocalDate dataCadastro;
+    private final LocalDate dataCadastro;
 
     public Produto(String nome, double preco, int quantidadeProduto, int codigoSistema, int codigoBarra, LocalDate dataCadastro) {
         this.nome = nome;
@@ -70,7 +70,7 @@ public abstract class Produto {
 
     @Override
     public String toString() {
-        return "Produto \n\n Nome: " + getNome() +
+        return "Produto \n\nNome: " + getNome() +
                "\nPreço: " + getPreco() +
                "\nQuantidade em estoque: " + getQuantidadeProduto() +
                "\nCodigo do sistema: " + getCodigoSistema() +
