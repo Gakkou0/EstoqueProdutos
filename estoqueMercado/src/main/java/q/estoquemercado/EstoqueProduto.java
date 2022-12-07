@@ -17,16 +17,34 @@ public class EstoqueProduto implements Estoque{
     
     @Override
     public void adicionarNovoProduto(Produto novoProduto){
-        if(this.estoque.size()<=100){
-            this.estoque.add(novoProduto);
-        } else {
-            System.out.println("Quantidade maxima de produtos atingida");
+        boolean flag = true;
+        
+            try {
+                validaQuantidade(novoProduto.getQuantidadeProduto());
+                flag = false;
+            } catch (QuantityLessThanZeroException ex) {
+                System.out.println("Quantidade abaixo de zero");
+            }
+        
+            
+        if (!flag){
+            if(this.estoque.size()<=100){
+                this.estoque.add(novoProduto);
+            } else {
+                System.out.println("Quantidade maxima de produtos atingida");
+            }
         }
     }
     
     @Override
     public void deletarProduto(int index){
-        this.estoque.remove(index);
+        try{
+            this.estoque.remove(index);
+            System.out.println("item deletado");
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("item não encontrado");
+        }
     }
     
     @Override
@@ -51,32 +69,46 @@ public class EstoqueProduto implements Estoque{
     
     @Override
     public void editarProduto(int index, Produto produto){
-        this.estoque.add(index, produto);
+        try{
+            this.estoque.add(index, produto);
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Item não encontrado");
+        }
     }
     
     @Override
     public void adicionarItens(int index, int quantidade){
-        
-        int novaQuantidade = (this.estoque.get(index).getQuantidadeProduto() + quantidade);
-        this.estoque.get(index).setQuantidadeProduto(novaQuantidade);
+        try{
+            int novaQuantidade = (this.estoque.get(index).getQuantidadeProduto() + quantidade);
+            this.estoque.get(index).setQuantidadeProduto(novaQuantidade);
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Item não encontrado");
+        }
     }
     
     @Override
     public void valorMaisAlto(){
         
-        double maiorValor = 0;
-        int maiorValorIndex = 0;
-        
-        for(int i = 0; i < this.estoque.size();i++){
-            if (i==0){
-                maiorValor = this.estoque.get(i).getPreco();
-            }else if(maiorValor<this.estoque.get(i).getPreco()){
-                maiorValor = this.estoque.get(i).getPreco();
-                maiorValorIndex = i;
+        try{
+            double maiorValor = 0;
+            int maiorValorIndex = 0;
+
+            for(int i = 0; i < this.estoque.size();i++){
+                if (i==0){
+                    maiorValor = this.estoque.get(i).getPreco();
+                }else if(maiorValor<this.estoque.get(i).getPreco()){
+                    maiorValor = this.estoque.get(i).getPreco();
+                    maiorValorIndex = i;
+                }
             }
+
+            System.out.println(this.estoque.get(maiorValorIndex));
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("O estoque está vazio");
         }
         
-        System.out.println(this.estoque.get(maiorValorIndex));
     }
     
     @Override
@@ -92,32 +124,49 @@ public class EstoqueProduto implements Estoque{
     
     @Override
     public void pesquisarProduto(String nome){
-        for(int i = 0; i < this.estoque.size();i++){
-            if(nome.equals(this.estoque.get(i).getNome())){
-                System.out.println(this.estoque.get(i));
-                break;
+        if(estoque.isEmpty()){
+            System.out.println("Estoque vazio");
+        }else{
+            for(int i = 0; i < this.estoque.size();i++){
+                if(nome.equals(this.estoque.get(i).getNome())){
+                    System.out.println(this.estoque.get(i));
+                    break;
+                }
             }
         }
     }
     
     @Override
     public void pesquisarProduto(int codigo){
-        for(int i = 0; i < this.estoque.size();i++){
-            if(codigo == this.estoque.get(i).getCodigoSistema()){
-                System.out.println(this.estoque.get(i));
-                break;
+        if(estoque.isEmpty()){
+            System.out.println("Estoque vazio");
+        }else{
+            for(int i = 0; i < this.estoque.size();i++){
+                if(codigo == this.estoque.get(i).getCodigoSistema()){
+                    System.out.println(this.estoque.get(i));
+                    break;
+                }
             }
         }
     }
     
     @Override
     public void pesquisaCodigoBarra(int codigo){
-        for(int i = 0; i <= this.estoque.size();i++){
-            if(codigo == this.estoque.get(i).getCodigoBarra()){
-                System.out.println(this.estoque.get(i));
-                break;
+        if(estoque.isEmpty()){
+            System.out.println("Estoque vazio");
+        }else{
+            for(int i = 0; i <= this.estoque.size();i++){
+                if(codigo == this.estoque.get(i).getCodigoBarra()){
+                    System.out.println(this.estoque.get(i));
+                    break;
+                }
             }
-        }
+        }   
     }
     
+    public static void validaQuantidade(int quantidade) throws QuantityLessThanZeroException{
+        if(quantidade<0){
+            throw new QuantityLessThanZeroException();
+        }
+    }
 }

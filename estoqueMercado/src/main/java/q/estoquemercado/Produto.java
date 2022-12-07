@@ -67,6 +67,7 @@ public abstract class Produto {
     public boolean verificaEstoque(){
         return getQuantidadeProduto()>0;
     }
+    
 
     @Override
     public String toString() {

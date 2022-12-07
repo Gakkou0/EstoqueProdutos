@@ -24,8 +24,10 @@ public class ProdutoVencimento extends Produto{
         return this.dataValidade.isBefore(LocalDate.now());
     }
     
+    
     @Override
     public String toString() {
-        return super.toString() + "\nData de validade: " + getDataValidade();
+        return super.toString() + "\nData de validade: " + getDataValidade() +
+                "\nEstá vencido: " + verificaValidade();
     }
 }

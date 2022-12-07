@@ -1,5 +1,6 @@
 package q.estoquemercado;
 
+import static java.lang.System.exit;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class EstoqueMercado {
         EstoqueProduto estoque = new EstoqueProduto();
 
         Scanner scan = new Scanner(System.in);
-        int opcao;
+        String opcao;
 
         while (running) {
             System.out.println("Menu");
@@ -24,25 +25,72 @@ public class EstoqueMercado {
                                4 - Manipulação de produtos
                                5 - Visualizar todos os Produtos
                                6 - Visualizar produto de maior Valor
-                               
+                               7 - Sair
                                """);
-            opcao = scan.nextInt();
+            
+            opcao = scan.nextLine();
 
             switch (opcao) {
-                case 1 -> {
-                    System.out.println("Digite o nome:");
-                    String nome = scan.next();
-                    estoque.pesquisarProduto(nome);
+                case "1" -> {
+                    System.out.println("""
+                                       1 - Pesquisa por nome
+                                       2 - Pesquisa por codigo
+                                        """);
+                    opcao = scan.nextLine();
+                    
+                    switch(opcao){
+                        case "1" -> {
+                            System.out.println("Digite o nome:");
+                            String nome = scan.next();
+                            estoque.pesquisarProduto(nome);
+                        }
+                        case "2" -> {
+                            boolean flag = true;
+                            
+                            while(flag){
+                                try {
+                                    Scanner input = new Scanner(System.in);
+                                    System.out.println("Digite o codigo:");
+                                    int codigo = input.nextInt();
+                                    estoque.pesquisarProduto(codigo);
+                                    
+                                    flag = false;
+                                }
+                                catch (InputMismatchException e) {
+                                    System.out.println("Tipo impartivel de dados");
+                                    System.out.println("Por favor, tente novamente");
+                                }
+                            }
+                        }
+                    }
+                    
                 }
-                case 2 -> {
-                    System.out.println("Digite o codigo de barras:");
-                    int codigo = scan.nextInt();
-                    estoque.pesquisaCodigoBarra(codigo);
+                case "2" -> {
+                    boolean flag = true;
+                    
+                    while(flag){
+                        try{
+                            Scanner input = new Scanner(System.in);
+
+                            System.out.println("Digite o codigo de barras:");
+                            int codigo = input.nextInt();
+                            estoque.pesquisaCodigoBarra(codigo);
+                            flag = false;
+                        }
+                        catch(InputMismatchException e) {
+                            System.out.println("Tipo impartivel de dados");
+                            System.out.println("Por favor, tente novamente");
+                        }
+                        catch(IndexOutOfBoundsException e) {
+                            System.out.println("Item não encontrado");
+                            flag = false;
+                        }
+                    }
                 }
-                case 3 -> {
+                case "3" -> {
                     System.out.println("Valor total em estoque é: " + estoque.valorTotal());
                 }
-                case 4 -> {
+                case "4" -> {
                     System.out.println("Menu de manipulação");
                     System.out.println("""
                                        1 - Adicionar produtos
@@ -51,17 +99,17 @@ public class EstoqueMercado {
                                        4 - Atualizar quantidade em estoque
                                        5 - Voltar
                                        """);
-                    opcao = scan.nextInt();
+                    opcao = scan.nextLine();
                     switch (opcao) {
-                        case 1 -> {
+                        case "1" -> {
                             System.out.println("""
                                                1 - produto eletronico
                                                2 - produto com prazo de validade
                                                """);
-                            opcao = scan.nextInt();
+                            opcao = scan.nextLine();
 
                             switch (opcao) {
-                                case 1 -> {
+                                case "1" -> {
                                     boolean flag = true;
 
                                     while (flag) {
@@ -91,7 +139,7 @@ public class EstoqueMercado {
                                         }
                                     }
                                 }
-                                case 2 -> {
+                                case "2" -> {
                                     boolean flag = true;
 
                                     while (flag) {
@@ -131,15 +179,14 @@ public class EstoqueMercado {
                             }
 
                         }
-                        case 2 -> {
+                        case "2" -> {
                             System.out.println("Digite o endereço do produto");
                             int index = scan.nextInt();
 
                             estoque.deletarProduto(index);
-
-                            System.out.println("item deletado");
+                                    
                         }
-                        case 3 -> {
+                        case "3" -> {
                             System.out.println("Digite o endereço do produto");
                             int index = scan.nextInt();
 
@@ -147,10 +194,10 @@ public class EstoqueMercado {
                                                1 - produto eletronico
                                                2 - produto com prazo de validade
                                                """);
-                            opcao = scan.nextInt();
+                            opcao = scan.nextLine();
 
                             switch (opcao) {
-                                case 1 -> {
+                                case "1" -> {
                                     boolean flag = true;
 
                                     while (flag) {
@@ -180,7 +227,7 @@ public class EstoqueMercado {
                                         }
                                     }
                                 }
-                                case 2 -> {
+                                case "2" -> {
                                     boolean flag = true;
 
                                     while (flag) {
@@ -220,7 +267,7 @@ public class EstoqueMercado {
 
                             }
                         }
-                        case 4 -> {
+                        case "4" -> {
                             System.out.println("Digite o endereço do produto");
                             int index = scan.nextInt();
                             System.out.println("Digite a quantidade a ser adicionada:");
@@ -230,7 +277,7 @@ public class EstoqueMercado {
 
                             System.out.println("itens adicionados");
                         }
-                        case 5 -> {
+                        case "5" -> {
                         }
 
                         default -> {
@@ -238,16 +285,20 @@ public class EstoqueMercado {
                         }
                     }
                 }
-                case 5 -> {
+                case "5" -> {
                     System.out.println("""
                                        1 - Exibir versão completa
                                        2 - Exibir versão resumida
                                        """);
                     estoque.lerTodosProdutos(scan.nextInt());
                 }
-                case 6 -> {
+                case "6" -> {
                     System.out.println("Produto com valor mais alto:\n");
                     estoque.valorMaisAlto();
+                }
+                
+                case "7" -> {
+                    exit(0);
                 }
                 default -> {
                     System.out.println("Opção não encontrada");
