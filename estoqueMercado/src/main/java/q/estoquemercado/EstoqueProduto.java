@@ -51,15 +51,23 @@ public class EstoqueProduto implements Estoque{
     public void lerTodosProdutos(int opcao){
         switch (opcao) {
             case 1 -> {
-                for(int i = 0; i < this.estoque.size();i++){
-                    System.out.println(this.estoque.get(i));
+                if(estoque.isEmpty()){
+                    System.out.println("Estoque vazio");
+                }else{
+                    for(int i = 0; i < this.estoque.size();i++){
+                        System.out.println(this.estoque.get(i));
+                    }    
                 }
             }
             case 2 -> {
-                for(int i = 0; i < this.estoque.size();i++){
-                    System.out.println("Produto \n\nNome: " + this.estoque.get(i).getNome() +
-                            "\nPreço: " + this.estoque.get(i).getPreco() +
-                            "\nCodigo de Barra: " + this.estoque.get(i).getCodigoBarra());
+                if(estoque.isEmpty()){
+                    System.out.println("Estoque vazio");
+                }else{
+                    for(int i = 0; i < this.estoque.size();i++){
+                        System.out.println("Produto \n\nNome: " + this.estoque.get(i).getNome() +
+                                "\nPreço: " + this.estoque.get(i).getPreco() +
+                                "\nCodigo de Barra: " + this.estoque.get(i).getCodigoBarra());        
+                    }
                 }
             }
             default -> System.out.println("opção não encontrada");
@@ -82,6 +90,8 @@ public class EstoqueProduto implements Estoque{
         try{
             int novaQuantidade = (this.estoque.get(index).getQuantidadeProduto() + quantidade);
             this.estoque.get(index).setQuantidadeProduto(novaQuantidade);
+            
+            System.out.println("Itens atualizados");
         }
         catch(IndexOutOfBoundsException e){
             System.out.println("Item não encontrado");
@@ -155,8 +165,8 @@ public class EstoqueProduto implements Estoque{
         if(estoque.isEmpty()){
             System.out.println("Estoque vazio");
         }else{
-            for(int i = 0; i <= this.estoque.size();i++){
-                if(codigo == this.estoque.get(i).getCodigoBarra()){
+            for(int i = 0; i < this.estoque.size();i++){
+                if(codigo == estoque.get(i).getCodigoBarra()){
                     System.out.println(this.estoque.get(i));
                     break;
                 }

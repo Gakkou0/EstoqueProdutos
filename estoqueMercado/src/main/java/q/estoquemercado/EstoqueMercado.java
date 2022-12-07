@@ -41,7 +41,7 @@ public class EstoqueMercado {
                     switch(opcao){
                         case "1" -> {
                             System.out.println("Digite o nome:");
-                            String nome = scan.next();
+                            String nome = scan.nextLine();
                             estoque.pesquisarProduto(nome);
                         }
                         case "2" -> {
@@ -182,14 +182,15 @@ public class EstoqueMercado {
                         case "2" -> {
                             System.out.println("Digite o endereço do produto");
                             int index = scan.nextInt();
-
+                            clearBuffer(scan);
+                                    
                             estoque.deletarProduto(index);
                                     
                         }
                         case "3" -> {
                             System.out.println("Digite o endereço do produto");
                             int index = scan.nextInt();
-
+                            
                             System.out.println("""
                                                1 - produto eletronico
                                                2 - produto com prazo de validade
@@ -272,10 +273,10 @@ public class EstoqueMercado {
                             int index = scan.nextInt();
                             System.out.println("Digite a quantidade a ser adicionada:");
                             int quantidade = scan.nextInt();
+                            clearBuffer(scan);
 
                             estoque.adicionarItens(index, quantidade);
 
-                            System.out.println("itens adicionados");
                         }
                         case "5" -> {
                         }
@@ -291,6 +292,7 @@ public class EstoqueMercado {
                                        2 - Exibir versão resumida
                                        """);
                     estoque.lerTodosProdutos(scan.nextInt());
+                    clearBuffer(scan);
                 }
                 case "6" -> {
                     System.out.println("Produto com valor mais alto:\n");
@@ -304,6 +306,12 @@ public class EstoqueMercado {
                     System.out.println("Opção não encontrada");
                 }
             }
+        }
+    }
+    
+    private static void clearBuffer(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
         }
     }
 }

@@ -21,7 +21,7 @@ public class ProdutoVencimento extends Produto{
     }
     
     public boolean verificaValidade(){
-        return this.dataValidade.isBefore(LocalDate.now());
+        return dataValidade.isBefore(LocalDate.now());
     }
     
     
